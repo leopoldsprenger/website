@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Gray Background with Navigation</title>
+    <style>
+        body {
+            background-color: #333; /* Dark gray color */
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 20px;
+        }
+        .left {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        nav a.selected {
+            color: lightblue;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+        }
+        .text-container {
+            color: white;
+            margin-left: 50px;
+            text-align: left;
+        }
+        .text-container h2 {
+            font-size: 36px;
+        }
+        .text-container p {
+            font-size: 16px;
+        }
+        .image-container img {
+            width: 300px; /* Adjust the size as needed */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="left">Leopold Sprenger</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html" class="selected">About</a>
+            <a href="content.html">Content</a>
+            <a href="achievements.html">Achievements</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="image-container">
+            <img src="imgs/Home-page.png" alt="Leopold Sprenger">
+        </div>
+        <div class="text-container">
+            <h2>Leopold Sprenger</h2>
+            <p>Hi, I am a 14 year old student and hobby developer based in Germany. <br>
+                My coding experiences started at the age of 10 when I designed <br>
+                my first little unity and scratch projects.</p>
+            <br>
+            <p>I quickly moved on to learning python and now at the age of 14 I am currently learning web development.</p>
+        </div>
+    </div>
+</body>
+</html>

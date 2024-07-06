@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements Page</title>
+    <style>
+        body {
+            background-color: #333; /* Dark gray color */
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 20px;
+        }
+        .left {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        nav a.selected {
+            color: lightblue;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            height: calc(100vh - 100px); /* Adjust based on top bar height */
+            margin-top: 20px;
+        }
+        .scrollable-grid {
+            width: 30%;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .grid-item {
+            margin-bottom: 20px;
+            cursor: pointer;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+        .grid-item img {
+            width: 50px; /* Adjust size as needed */
+            height: 50px; /* Adjust size as needed */
+            margin-right: 10px;
+        }
+        .grid-item:hover {
+            text-decoration: underline;
+        }
+        .grid-item.selected {
+            color: lightblue;
+        }
+        .details-container {
+            width: 70%;
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+            display: none; /* Initially hidden */
+            overflow-y: auto;
+            max-height: 100%; /* Ensure it doesn’t overflow the page */
+        }
+        .details-container h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="left">Leopold Sprenger</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="content.html">Content</a>
+            <a href="achievements.html" class="selected">Achievements</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="scrollable-grid" id="scrollableGrid">
+            <div class="grid-item" data-details="<p>I made this personal website mainly to learn HTML, CSS and a bit of javascript. I can now also use it to upload content and achievements to the web.</p>
+                <p></p>
+                <p>This was my first time working with HTML, CSS or javascript</p>
+                <img src='imgs/website-design.png' alt='Home Page img' style='width:100%;'>
+                <p>This is the current home page.</p>
+                <br>
+                I used 4 different html files each for one part of the site: <br>
+                index.html, about.html, content.html and achievements.html <br> <br>
+                Since I had absolutely no idea on how to start, I used a mixture of documentation, youtube tutorials and ChatGPT 3.5's coding feature to get an initial setup running on github. <br>
+                I then populated the site with the first few text fields, images and pieces of content, like this content piece right here. <br>
+                This website will serve as my hub for creating and showcasing different projects." data-heading="Achievement 1">
+                <img src="imgs/website-icon.png" alt="Achievement 1 Icon">
+                Personal website
+            </div>
+            <div class="grid-item" data-details="<h3>Achievement 2 Details</h3><p>Further details can be provided here.</p>" data-heading="Achievement 2">
+                <img src="icon2.jpg" alt="Achievement 2 Icon">
+                Achievement 2
+            </div>
+            <div class="grid-item" data-details="<h3>Achievement 3 Details</h3><p>Include more information as needed.</p>" data-heading="Achievement 3">
+                <img src="icon3.jpg" alt="Achievement 3 Icon">
+                Achievement 3
+            </div>
+            <!-- Add more grid items as needed -->
+        </div>
+        <div class="details-container" id="detailsContainer">
+            <h2 id="detailsHeading">Achievement Details</h2>
+            <div id="detailsContent">Select an achievement to see the details.</div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.grid-item').forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove selected class from all items
+                document.querySelectorAll('.grid-item').forEach(i => i.classList.remove('selected'));
+                // Add selected class to the clicked item
+                item.classList.add('selected');
+                // Get the heading and details for the clicked item
+                const heading = item.getAttribute('data-heading');
+                const details = item.getAttribute('data-details');
+                // Update the heading and content in the details container
+                document.getElementById('detailsHeading').innerText = heading;
+                document.getElementById('detailsContent').innerHTML = details;
+                // Show the details container
+                document.getElementById('detailsContainer').style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
