@@ -1,5 +1,7 @@
-## This is post 1
+---
+title: This is the title
+---
 
-This is some text
+# This is the title
 
-Here are some **bold** or __italic__ things
+Content goes here...
