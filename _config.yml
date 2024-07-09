@@ -10,4 +10,4 @@ include:
 collections:
   content:
     output: true
-    permalink: /:path/
+    permalink: /content/:path/
