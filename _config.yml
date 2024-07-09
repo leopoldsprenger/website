@@ -1,0 +1,13 @@
+title: My Website
+markdown: kramdown
+plugins:
+  - jekyll-include-cache
+
+include:
+  - _content
+  - css
+
+collections:
+  content:
+    output: true
+    permalink: /:path/
