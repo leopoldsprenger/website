@@ -91,7 +91,13 @@
     </div>
     <div class="container">
         <div class="scrollable-content" id="scrollableContent">
-            <!-- Content items will be generated here -->
+            <div class="content-item" data-md-file="example.md" data-heading="Host your website with GitHub">
+                Host your website with GitHub
+            </div>
+            <div class="content-item" data-md-file="example2.md" data-heading="Content Item 2">
+                Content Item 2
+            </div>
+            <!-- Add more content items as needed -->
         </div>
         <div class="details-container" id="detailsContainer">
             <h2 id="detailsHeading">Content Details</h2>
@@ -109,23 +115,15 @@
             document.head.appendChild(link);
         }
 
-        // Function to create a content item
-        function createContentItem(mdFile) {
-            const title = mdFile.replace(/_/g, ' ').replace('.md', '');
-            const contentItem = document.createElement('div');
-            contentItem.classList.add('content-item');
-            contentItem.setAttribute('data-md-file', 'content/' + mdFile);
-            contentItem.setAttribute('data-heading', title);
-            contentItem.innerText = title;
-
-            contentItem.addEventListener('click', () => {
+        document.querySelectorAll('.content-item').forEach(item => {
+            item.addEventListener('click', () => {
                 // Remove selected class from all items
                 document.querySelectorAll('.content-item').forEach(i => i.classList.remove('selected'));
                 // Add selected class to the clicked item
-                contentItem.classList.add('selected');
+                item.classList.add('selected');
                 // Get the heading and Markdown file for the clicked item
-                const heading = contentItem.getAttribute('data-heading');
-                const mdFile = contentItem.getAttribute('data-md-file');
+                const heading = item.getAttribute('data-heading');
+                const mdFile = item.getAttribute('data-md-file');
                 // Update the heading in the details container
                 document.getElementById('detailsHeading').innerText = heading;
                 // Fetch the Markdown content and convert it to HTML
@@ -144,19 +142,7 @@
                         console.error('Error fetching the Markdown file:', error);
                     });
             });
-
-            document.getElementById('scrollableContent').appendChild(contentItem);
-        }
-
-        // Fetch the index.json file and create content items
-        fetch('content/index.json')
-            .then(response => response.json())
-            .then(files => {
-                files.forEach(file => createContentItem(file));
-            })
-            .catch(error => {
-                console.error('Error fetching the index.json file:', error);
-            });
+        });
     </script>
 </body>
 </html>
