@@ -1,7 +1,3 @@
----
-title: This is the title
----
+### Whatever here
 
-# This is the title
-
-Content goes here...
+Code goes here
