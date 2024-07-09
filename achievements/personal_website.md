@@ -1,7 +1,7 @@
 I made this personal website mainly to learn HTML, CSS and a bit of javascript. I can now also use it to upload content and achievements to the web.
 This was my first time working with HTML, CSS or javascript.
 
-![Home page image](imgs/website-design.png)
+![Home page image](imgs/Website-design.png)
 This is the current home page.
 
 I used 4 different html files each for one part of the site:
