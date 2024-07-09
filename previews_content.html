@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Page</title>
+    <style>
+        body {
+            background-color: #333; /* Dark gray color */
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 20px;
+        }
+        .left {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        nav a.selected {
+            color: lightblue;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            height: calc(100vh - 100px); /* Adjust based on top bar height */
+            margin-top: 20px;
+        }
+        .scrollable-content {
+            width: 30%;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .content-item {
+            margin-bottom: 20px;
+            cursor: pointer;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+        .content-item:hover {
+            text-decoration: underline;
+        }
+        .content-item.selected {
+            color: lightblue;
+        }
+        .details-container {
+            width: 70%;
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+            display: none; /* Initially hidden */
+            overflow-y: auto;
+            max-height: 100%; /* Ensure it doesn’t overflow the page */
+        }
+        .details-container h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="left">Leopold Sprenger</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="content.html" class="selected">Content</a>
+            <a href="achievements.html">Achievements</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="scrollable-content" id="scrollableContent">
+            <div class="content-item" data-details="
+                <h3>Creating the website file</h3>
+                <p>In order to host your site on GitHub, you first need the html file for your website. <br>
+                To do this, create a new file named index.html and open it with your prefered text or code editor. Now you can write some simple HTML code in there for your website and hit save. <br>
+                If you don't know how to write HTML, just copy my code for now or look at some tutorials online.</p>
+                <img src='imgs/upload_to_github/Screenshot-0.png' alt='VS Code Screenshot' style='width:100%; height:auto''>
+                <h3>Uploading the file to GitHub</h3>
+                <p>Now that you have your website code, login to your github or create a new account. Follow the steps until your reach a site similar to this.</p>
+                <img src='imgs/upload_to_github/Screenshot-1.png' alt='GitHub Create Repo' style='width:100%; height:auto''>
+                <p>Where it says 'create repository', give your repository a name, click on public and click 'create repository'.</p>
+                <p>Now when you're redirected to this page, click on 'upload an existing file' and follow the steps. Then click commit changes</p>
+                <img src='imgs/upload_to_github/Screenshot-2.png' alt='upload existing file' style='width:100%; height:auto'>
+                <h3>Hosting your website code</h3>
+                <p>You should now be on this page, where you can see the code for your repository. <br> Now on the top, click on settings, pages and under 'branch' change the selection from 'None' to 'main' and hit save.</p>
+                <img src='imgs/upload_to_github/Screenshot-3.png' alt='Repo Code' style='width:100%; height:auto''>
+                <img src='imgs/upload_to_github/Screenshot-4.png' alt='Branch Setting' style='width:100%; height:auto''>
+                <p>Wait a bit, then hit refresh. At the top, there should be some text with a URL to your new website, go click on it. <br>If the text doesn't display, keep waiting and refreshing.</p>
+                <img src='imgs/upload_to_github/Screenshot-5.png' alt='Click on URL for website' style='width:100%; height:auto''>
+                <img src='imgs/upload_to_github/Screenshot-6.png' alt='Your website displayed here' style='width:100%; height:auto''>
+                <p>And there you have it. Your very own website. <br>Notice how it has your username and 'github' in the name. If you have a custom domain, you can input it in the same page settings under 'custom URL'. <br>But that's gonna cost you something.</p>
+                <p>Anyway, you now have your own website to display content and show your friends. Enjoy!</p>
+                " data-heading="Host your website with GitHub">
+                Host your website with GitHub
+            </div>
+            <div class="content-item" data-details="<h3>Content Item 3 Details</h3><p>Additional details can be included here.</p>" data-heading="Content Item 3">
+                Content Item 2
+            </div>
+            <!-- Add more content items as needed -->
+        </div>
+        <div class="details-container" id="detailsContainer">
+            <h2 id="detailsHeading">Content Details</h2>
+            <div id="detailsContent">Select a content item to see the details.</div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.content-item').forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove selected class from all items
+                document.querySelectorAll('.content-item').forEach(i => i.classList.remove('selected'));
+                // Add selected class to the clicked item
+                item.classList.add('selected');
+                // Get the heading and details for the clicked item
+                const heading = item.getAttribute('data-heading');
+                const details = item.getAttribute('data-details');
+                // Update the heading and content in the details container
+                document.getElementById('detailsHeading').innerText = heading;
+                document.getElementById('detailsContent').innerHTML = details;
+                // Show the details container
+                document.getElementById('detailsContainer').style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
