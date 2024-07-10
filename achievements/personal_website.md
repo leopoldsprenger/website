@@ -1,4 +1,5 @@
 __Saturday, 06.07.2024__
+
 I made this personal website mainly to learn HTML, CSS and a bit of javascript. I can now also use it to upload content and achievements to the web.
 This was my first time working with HTML, CSS or javascript.
 
@@ -13,5 +14,6 @@ I then populated the site with the first few text fields, images and pieces of c
 This website will serve as my hub for creating and showcasing different projects.
 
 __Wednesday, 10.07.2024__
+
 I made an update to the code to make editing or adding of new content and achievements easier.
 Now I can just create and edit my content with markdown instead of directly editing the html code, which also has the potential to screw up the core code functions.
