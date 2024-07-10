@@ -9,13 +9,13 @@ A website is the best way to have a custom and controlled environment that repre
 ### #02 SEO and Google
 When a potential business partner or future employer is trying to get an impression of you, they usually search for you on Google. And what is the first thing that pops up on Google? A website! Having a website means you can control the first search result they will most likely see about you. Making that as custom and tailored to your wishes as possible is worth the effort.
 
-![google algorithm](imgs/website_need/google_algorithm.jpg)
+![google algorithm](imgs/website_need/google_algorithm.jpeg)
 
 
 ### #03 Credibility and Trust
 Establishing trust with the people you meet is key. A well-designed website tells people about your technical skills and professionalism. People can view your background and previous works with transparency, helping to build trust and credibility. Extra points if you include testimonials from your previous business partners in your portfolio.
 
-![professionalism](imgs/website_need/professionalism.jpg)
+![professionalism](imgs/website_need/professionalism.jpeg)
 
 
 ### #04 No Algorithm for Content
