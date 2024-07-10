@@ -30,3 +30,4 @@ Wait a bit, then hit refresh. At the top, there should be some text with a URL t
 
 And there you have it. Your very own website. <br>Notice how it has your username and 'github' in the name. If you have a custom domain, you can input it in the same page settings under 'custom URL'. 
 But that's going to cost you something.
+Anyway, you now have your own website to display content and show your friends. Enjoy!
