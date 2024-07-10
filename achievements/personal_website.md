@@ -15,5 +15,5 @@ This website will serve as my hub for creating and showcasing different projects
 
 __Wednesday, 10.07.2024__
 
-I made an update to the code to make editing or adding of new content and achievements easier.
+I made an update to the code to make editing or adding new content and achievements easier.
 Now I can just create and edit my content with markdown instead of directly editing the html code, which also has the potential to screw up the core code functions.
