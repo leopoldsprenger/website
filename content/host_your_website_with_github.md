@@ -5,6 +5,7 @@ If you don't know how to write HTML, just copy my code for now or look at some t
 
 ![VS Code Snippet](imgs/upload_to_github/Screenshot-0.png)
 
+
 ### Uploading the file to GitHub
 Now that you have your website code, login to your github or create a new account. Follow the steps until your reach a site similar to this.
 
@@ -15,6 +16,7 @@ Now when you're redirected to this page, click on 'upload an existing file' and 
 
 ![Upload an existing file](imgs/upload_to_github/Screenshot-2.png)
 
+
 ### Hosting your website code
 You should now be on this page, where you can see the code for your repository.
 Now on the top, click on settings, pages and under 'branch' change the selection from 'None' to 'main' and hit save.
@@ -24,6 +26,7 @@ Now on the top, click on settings, pages and under 'branch' change the selection
 ![Page Settings](imgs/upload_to_github/Screenshot-4.png)
 
 Wait a bit, then hit refresh. At the top, there should be some text with a URL to your new website, go click on it. <br>If the text doesn't display, keep waiting and refreshing.
+
 ![Click on the URL for the website](imgs/upload_to_github/Screenshot-5.png)
 
 ![Your website displayed here](imgs/upload_to_github/Screenshot-6.png)
