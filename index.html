@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Content Page</title>
+    <title>Dark Gray Background with Navigation</title>
     <style>
         body {
             background-color: #333; /* Dark gray color */
             margin: 0;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
+
         .top-bar {
             width: 100%;
             display: flex;
@@ -19,11 +21,13 @@
             align-items: flex-start;
             margin: 20px;
         }
+
         .left {
             color: white;
             font-family: Arial, sans-serif;
             font-size: 18px;
         }
+
         nav a {
             color: white;
             text-decoration: none;
@@ -31,182 +35,87 @@
             font-family: Arial, sans-serif;
             font-size: 18px;
         }
+
         nav a:hover {
             text-decoration: underline;
         }
+
         nav a.selected {
             color: lightblue;
         }
+
         .container {
-            width: 100%;
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap; /* Allows items to wrap onto new lines */
+            justify-content: center;
             align-items: center;
-            padding: 20px;
+            margin-top: 50px;
+            padding: 20px; /* Adds padding for better spacing */
         }
-        .content-list {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        .content-item {
-            margin: 10px 0;
-            padding: 10px;
+
+        .text-container {
             color: white;
-            font-family: Arial, sans-serif;
-            font-size: 18px;
-            cursor: pointer;
+            margin-right: 20px; /* Reduced margin for better spacing */
+            text-align: left;
+            flex: 1; /* Allows the text container to grow and shrink */
         }
-        .content-item:hover {
-            text-decoration: underline;
+
+        .text-container h1 {
+            font-size: 24px;
         }
-        .details-container {
-            width: 100%;
-            padding: 20px;
-            box-sizing: border-box;
-            color: white;
-            display: none; /* Initially hidden */
-            overflow-y: auto;
-            max-height: calc(100vh - 50px); /* Adjust based on top bar height */
+
+        .text-container h2 {
+            font-size: 36px;
         }
-        .details-container.active {
-            display: block;
+
+        .text-container p {
+            font-size: 16px;
         }
-        .details-container h2 {
-            margin-top: 0;
-        }
-        /* Back button styles */
-        .back-button {
-            position: fixed;
-            top: 70px; /* Adjusted position */
-            left: 10px;
-            background-color: #444; /* Darker background */
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: none; /* Initially hidden */
-            z-index: 1000; /* Ensure it's above other content */
-        }
-        .back-button.active {
-            display: block;
-        }
-        /* Ensure all images fit well */
-        img {
-            width: 100%;
+
+        .image-container img {
+            width: 100%; /* Make image responsive */
+            max-width: 300px; /* Cap maximum width */
             height: auto;
-            max-width: 100%; /* Ensure images do not exceed container width */
-            object-fit: contain; /* Adjust to fit image correctly */
-            box-sizing: border-box; /* Ensure padding is included in width calculation */
         }
+
         /* Media query for mobile devices */
         @media (max-width: 768px) {
-            .top-bar {
-                position: sticky;
-                top: 0;
-                z-index: 1000; /* Ensure it's above other content */
-                background-color: #333; /* Dark gray color */
-            }
             .container {
-                padding: 10px; /* Adjust padding for better spacing */
+                flex-direction: column; /* Stack text and image vertically on mobile */
+                align-items: center; /* Center align items */
             }
-            .content-list {
-                flex-direction: column; /* Stack items vertically */
-                align-items: center; /* Center items */
+            
+            .text-container {
+                margin-right: 0; /* Remove right margin on mobile */
+                text-align: center; /* Center text on mobile */
+                margin-bottom: 20px; /* Add margin below text */
             }
-            .details-container.active {
-                position: fixed;
-                top: 50px; /* Adjust top position */
-                left: 0;
-                width: 100%;
-                height: calc(100vh - 50px);
-                background-color: #333; /* Dark gray color */
-                overflow-y: auto;
-            }
-            .back-button {
-                top: 10px; /* Adjusted position */
-                z-index: 1100; /* Ensure above details container */
+            
+            .image-container img {
+                max-width: 100%; /* Ensure the image fits within the container on mobile */
             }
         }
     </style>
-    <!-- Marked library for Markdown conversion -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <div class="top-bar">
         <div class="left">Leopold Sprenger</div>
         <nav>
-            <a href="index.html">Home</a>
+            <a href="index.html" class="selected">Home</a>
             <a href="about.html">About</a>
-            <a href="content.html" class="selected">Content</a>
+            <a href="content.html">Content</a>
             <a href="achievements.html">Achievements</a>
         </nav>
     </div>
     <div class="container">
-        <div class="content-list" id="contentList">
-            <div class="content-item" data-md-file="content/host_your_website_with_github.md" data-heading="Host your website with GitHub">
-                Host your website with GitHub
-            </div>
-            <div class="content-item" data-md-file="content/why_you_need_a_website.md" data-heading="Why you need a website">
-                Why you need a website
-            </div>
-            <!-- Add more content items as needed -->
-        </div>
-        <div class="details-container" id="detailsContainer">
-            <button class="back-button" id="backButton">&larr; Back</button>
-            <div id="detailsContent">Select a content item to see the details.</div>
+        <div class="text-container">
+            <p>Hi, my name is</p>
+            <h2>Leopold Sprenger</h2>
+            <p>I'm a student and hobby developer based in Germany</p>
+        </div>  
+        <div class="image-container">
+            <img src="imgs/Home-page.png" alt="Leopold Sprenger">
         </div>
     </div>
-
-    <script>
-        // Event listener for content items
-        document.querySelectorAll('.content-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const heading = item.getAttribute('data-heading');
-                const mdFile = item.getAttribute('data-md-file');
-                
-                // Hide content list and show details container
-                document.getElementById('contentList').style.display = 'none';
-                document.getElementById('detailsContainer').classList.add('active');
-                document.getElementById('backButton').classList.add('active');
-                
-                // Update the details container
-                document.getElementById('detailsContent').innerHTML = '<button class="back-button" id="backButton">&larr; Back</button>';
-                
-                // Fetch the Markdown content and convert it to HTML
-                fetch(mdFile)
-                    .then(response => response.text())
-                    .then(mdContent => {
-                        const htmlContent = marked.parse(mdContent);
-                        document.getElementById('detailsContent').innerHTML += htmlContent;
-                        
-                        // Scroll to top of details container
-                        document.getElementById('detailsContainer').scrollTop = 0;
-                    })
-                    .catch(error => {
-                        document.getElementById('detailsContent').innerHTML = '<p>Error loading content.</p>';
-                        console.error('Error fetching the Markdown file:', error);
-                    });
-            });
-        });
-        
-        // Event listener for back button
-        document.getElementById('backButton').addEventListener('click', () => {
-            // Show content list and hide details container
-            document.getElementById('contentList').style.display = 'flex';
-            document.getElementById('detailsContainer').classList.remove('active');
-            document.getElementById('backButton').classList.remove('active');
-        });
-        
-        // Handle window resize to adjust layout
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 768) {
-                // Reset to desktop view
-                document.getElementById('detailsContainer').classList.remove('active');
-                document.getElementById('backButton').classList.remove('active');
-                document.getElementById('contentList').style.display = 'flex';
-            }
-        });
-    </script>
 </body>
 </html>
