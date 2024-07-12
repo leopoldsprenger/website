@@ -166,7 +166,6 @@
                 if (window.innerWidth <= 768) {
                     detailsHeading.prepend(backButton);
                     backButton.style.display = 'inline';
-                    document.querySelector('.top-bar').style.display = 'none';
                 }
                 // Fetch the Markdown content and convert it to HTML
                 fetch(mdFile)
@@ -194,7 +193,6 @@
             scrollableContent.style.display = 'block';
             detailsContainer.style.display = 'none';
             backButton.style.display = 'none';
-            document.querySelector('.top-bar').style.display = 'flex';
         });
 
         window.addEventListener('scroll', () => {
