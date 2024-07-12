@@ -6,110 +6,132 @@
     <title>Content Page</title>
     <style>
         body {
-    background-color: #333; /* Dark gray color */
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+            background-color: #333; /* Dark gray color */
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 20px;
+            position: relative;
+            z-index: 10; /* Ensure it's above other content */
+        }
+        .left {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        nav a.selected {
+            color: lightblue;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            height: calc(100vh - 100px); /* Adjust based on top bar height */
+            margin-top: 20px;
+            flex-direction: row; /* Default to row for desktop */
+            gap: 20px; /* Add gap between sections */
+        }
+        .scrollable-content, .details-container {
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .scrollable-content {
+            width: 30%;
+            display: block; /* Default to block for desktop */
+        }
+        .content-item {
+            margin-bottom: 20px;
+            cursor: pointer;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+        .content-item:hover {
+            text-decoration: underline;
+        }
+        .content-item.selected {
+            color: lightblue;
+        }
+        .details-container {
+            width: 70%;
+            display: none; /* Initially hidden */
+            color: white;
+        }
+        .details-container h2 {
+            margin-top: 0;
+        }
+        /* Ensure all images have width 100% and height auto */
+        img {
+            width: 100%;
+            height: auto;
+            max-width: 100%; /* Ensure images do not exceed container width */
+            object-fit: contain; /* or 'cover' based on your preference */
+            box-sizing: border-box; /* Ensure padding is included in width calculation */
+        }
 
-.top-bar {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin: 20px;
-}
-
-.left {
-    color: white;
-    font-family: Arial, sans-serif;
-    font-size: 18px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 10px;
-    font-family: Arial, sans-serif;
-    font-size: 18px;
-}
-
-nav a:hover {
-    text-decoration: underline;
-}
-
-nav a.selected {
-    color: lightblue;
-}
-
-.container {
-    display: flex;
-    flex-direction: row; /* Default layout for larger screens */
-    width: 100%;
-    height: calc(100vh - 100px); /* Adjust based on top bar height */
-    margin-top: 20px;
-}
-
-.scrollable-content, .details-container {
-    overflow-y: auto;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.scrollable-content {
-    width: 30%;
-    background: #444; /* Optional: background color for better contrast */
-}
-
-.details-container {
-    width: 70%;
-    color: white;
-    display: none; /* Initially hidden */
-    max-height: 100%; /* Ensure it doesn’t overflow the page */
-}
-
-.scrollable-content .content-item, .details-container .grid-item {
-    margin-bottom: 20px;
-    cursor: pointer;
-    color: white;
-    font-family: Arial, sans-serif;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-}
-
-.scrollable-content .content-item:hover, .details-container .grid-item:hover {
-    text-decoration: underline;
-}
-
-.scrollable-content .content-item.selected, .details-container .grid-item.selected {
-    color: lightblue;
-}
-
-img {
-    width: 100%;
-    height: auto;
-    max-width: 100%; /* Ensure images do not exceed container width */
-    object-fit: contain; /* or 'cover' based on your preference */
-    box-sizing: border-box; /* Ensure padding is included in width calculation */
-}
-
-/* Media query for mobile devices */
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column; /* Stack columns vertically on mobile */
-    }
-    
-    .scrollable-content {
-        width: 100%; /* Full width for mobile */
-    }
-    
-    .details-container {
-        width: 100%; /* Full width for mobile */
-    }
-}
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .top-bar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                background: #333;
+                padding: 10px;
+                z-index: 20; /* Ensure it's above other content */
+            }
+            .container {
+                flex-direction: column;
+                height: calc(100vh - 60px); /* Adjust for fixed top bar height */
+            }
+            .scrollable-content {
+                width: 100%;
+                display: block; /* Make it full width on mobile */
+            }
+            .details-container {
+                width: 100%;
+            }
+            .scrollable-content, .details-container {
+                padding: 10px;
+            }
+            .back-arrow {
+                display: none; /* Hidden by default */
+                position: fixed;
+                top: 60px; /* Below the top bar */
+                left: 20px;
+                color: white;
+                font-size: 24px;
+                cursor: pointer;
+                z-index: 30; /* Ensure it's above other content */
+                background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+                padding: 10px;
+                border-radius: 5px;
+            }
+            .details-container.show {
+                display: block;
+            }
+            .scrollable-content.show {
+                display: none;
+            }
+        }
     </style>
     <!-- Marked library for Markdown conversion -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -139,6 +161,7 @@ img {
             <div id="detailsContent">Select a content item to see the details.</div>
         </div>
     </div>
+    <div class="back-arrow" id="backArrow">&larr; Back</div>
 
     <script>
         document.querySelectorAll('.content-item').forEach(item => {
@@ -160,6 +183,12 @@ img {
                         document.getElementById('detailsContent').innerHTML = htmlContent;
                         // Show the details container
                         document.getElementById('detailsContainer').style.display = 'block';
+                        document.querySelector('.scrollable-content').classList.add('show');
+                        document.querySelector('.details-container').classList.add('show');
+                        // Show back arrow on mobile
+                        if (window.innerWidth <= 768) {
+                            document.getElementById('backArrow').style.display = 'block';
+                        }
                     })
                     .catch(error => {
                         document.getElementById('detailsContent').innerHTML = '<p>Error loading content.</p>';
@@ -167,6 +196,19 @@ img {
                     });
             });
         });
+
+        // Back arrow functionality
+        document.getElementById('backArrow').addEventListener('click', () => {
+            document.getElementById('detailsContainer').style.display = 'none';
+            document.querySelector('.scrollable-content').classList.remove('show');
+            document.querySelector('.details-container').classList.remove('show');
+            document.getElementById('backArrow').style.display = 'none';
+        });
+
+        // Hide back arrow on load if not on mobile
+        if (window.innerWidth > 768) {
+            document.getElementById('backArrow').style.display = 'none';
+        }
     </script>
 </body>
 </html>
