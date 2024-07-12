@@ -8,10 +8,12 @@
         body {
             background-color: #333; /* Dark gray color */
             margin: 0;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
+        
         .top-bar {
             width: 100%;
             display: flex;
@@ -20,11 +22,13 @@
             margin: 20px;
             background-color: #333; /* Keep the background flush with the rest */
         }
+        
         .left {
             color: white;
             font-family: Arial, sans-serif;
             font-size: 18px;
         }
+        
         nav a {
             color: white;
             text-decoration: none;
@@ -32,101 +36,125 @@
             font-family: Arial, sans-serif;
             font-size: 18px;
         }
+        
         nav a:hover {
             text-decoration: underline;
         }
+        
         nav a.selected {
             color: lightblue;
         }
+        
         .container {
-            width: 100%;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            width: 100%;
+            height: calc(100vh - 100px); /* Adjust based on top bar height */
+            margin-top: 20px;
+        }
+        
+        .scrollable-content, .scrollable-grid {
+            width: 30%;
+            overflow-y: auto;
             padding: 20px;
+            box-sizing: border-box;
         }
-        .content-list {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        .content-item {
-            margin: 10px 0;
-            padding: 10px;
+        
+        .content-item, .grid-item {
+            margin-bottom: 20px;
+            cursor: pointer;
             color: white;
             font-family: Arial, sans-serif;
             font-size: 18px;
-            cursor: pointer;
-            background-color: transparent; /* Ensure items blend with background */
+            display: flex;
+            align-items: center;
         }
-        .content-item:hover {
+        
+        .content-item:hover, .grid-item:hover {
             text-decoration: underline;
         }
+        
+        .content-item.selected, .grid-item.selected {
+            color: lightblue;
+        }
+        
         .details-container {
-            width: 100%;
+            width: 70%;
             padding: 20px;
             box-sizing: border-box;
             color: white;
             display: none; /* Initially hidden */
             overflow-y: auto;
-            max-height: calc(100vh - 50px); /* Adjust based on top bar height */
-            background-color: #333; /* Ensure background matches */
-            position: relative; /* For positioning back button */
+            max-height: 100%; /* Ensure it doesn’t overflow the page */
         }
-        .details-container.active {
-            display: block;
-        }
+        
         .details-container h2 {
             margin-top: 0;
-            padding-left: 40px; /* Increased space for back button */
         }
-        /* Back button styles */
-        .back-button {
-            position: absolute;
-            top: 30px; /* Adjusted position */
-            left: 20px; /* Adjusted position */
-            background: none;
-            color: white;
-            font-size: 24px;
-            border: none;
-            cursor: pointer;
-            z-index: 1000; /* Ensure it's above other content */
-        }
-        /* Ensure all images fit well */
+        
+        /* Ensure all images have width 100% and height auto */
         img {
             width: 100%;
             height: auto;
             max-width: 100%; /* Ensure images do not exceed container width */
-            object-fit: contain; /* Adjust to fit image correctly */
+            object-fit: contain; /* or 'cover' based on your preference */
             box-sizing: border-box; /* Ensure padding is included in width calculation */
         }
-        /* Media query for mobile devices */
+        
+        /* Mobile styles */
         @media (max-width: 768px) {
-            .top-bar {
-                position: sticky;
-                top: 0;
-                z-index: 1000; /* Ensure it's above other content */
-            }
             .container {
-                padding: 10px; /* Adjust padding for better spacing */
+                height: calc(100vh - 50px); /* Adjust based on top bar height */
+                margin-top: 0;
+                flex-direction: column;
             }
-            .content-list {
-                flex-direction: column; /* Stack items vertically */
-                align-items: center; /* Center items */
+            
+            .scrollable-content {
+                width: 100%;
             }
-            .details-container.active {
+            
+            .scrollable-grid {
+                display: none; /* Hide grid on mobile */
+            }
+            
+            .details-container {
+                width: 100%;
                 position: fixed;
                 top: 50px; /* Adjust top position */
                 left: 0;
-                width: 100%;
                 height: calc(100vh - 50px);
-                background-color: #333; /* Dark gray color */
+                background-color: #333; /* Ensure background matches */
                 overflow-y: auto;
             }
+            
             .back-button {
+                position: absolute;
                 top: 10px; /* Adjusted position */
                 left: 10px; /* Ensure it stays in view */
+                background: none;
+                color: white;
                 font-size: 24px; /* Adjust size for mobile */
+                border: none;
+                cursor: pointer;
+                z-index: 1000; /* Ensure it's above other content */
+            }
+            
+            .details-container.active {
+                display: block;
+            }
+        }
+        
+        /* Desktop styles */
+        @media (min-width: 769px) {
+            .scrollable-content {
+                width: 30%;
+            }
+            
+            .scrollable-grid {
+                display: block; /* Show grid on desktop */
+            }
+            
+            .details-container {
+                display: block;
             }
         }
     </style>
@@ -144,7 +172,7 @@
         </nav>
     </div>
     <div class="container">
-        <div class="content-list" id="contentList">
+        <div class="scrollable-content" id="scrollableContent">
             <div class="content-item" data-md-file="content/host_your_website_with_github.md" data-heading="Host your website with GitHub">
                 Host your website with GitHub
             </div>
@@ -164,24 +192,23 @@
         // Event listener for content items
         document.querySelectorAll('.content-item').forEach(item => {
             item.addEventListener('click', () => {
+                // Remove selected class from all items
+                document.querySelectorAll('.content-item').forEach(i => i.classList.remove('selected'));
+                // Add selected class to the clicked item
+                item.classList.add('selected');
+                // Get the heading and Markdown file for the clicked item
                 const heading = item.getAttribute('data-heading');
                 const mdFile = item.getAttribute('data-md-file');
-                
-                // Hide content list and show details container
-                document.getElementById('contentList').style.display = 'none';
-                document.getElementById('detailsContainer').classList.add('active');
-                document.getElementById('backButton').classList.add('active');
+                // Update the heading in the details container
                 document.getElementById('detailsHeading').innerText = heading;
-                
                 // Fetch the Markdown content and convert it to HTML
                 fetch(mdFile)
                     .then(response => response.text())
                     .then(mdContent => {
                         const htmlContent = marked.parse(mdContent);
                         document.getElementById('detailsContent').innerHTML = htmlContent;
-                        
-                        // Scroll to top of details container
-                        document.getElementById('detailsContainer').scrollTop = 0;
+                        // Show the details container
+                        document.getElementById('detailsContainer').style.display = 'block';
                     })
                     .catch(error => {
                         document.getElementById('detailsContent').innerHTML = '<p>Error loading content.</p>';
@@ -193,18 +220,16 @@
         // Event listener for back button
         document.getElementById('backButton').addEventListener('click', () => {
             // Show content list and hide details container
-            document.getElementById('contentList').style.display = 'flex';
-            document.getElementById('detailsContainer').classList.remove('active');
-            document.getElementById('backButton').classList.remove('active');
+            document.getElementById('scrollableContent').style.display = 'block';
+            document.getElementById('detailsContainer').style.display = 'none';
         });
         
         // Handle window resize to adjust layout
         window.addEventListener('resize', () => {
             if (window.innerWidth >= 768) {
                 // Reset to desktop view
-                document.getElementById('detailsContainer').classList.remove('active');
-                document.getElementById('backButton').classList.remove('active');
-                document.getElementById('contentList').style.display = 'flex';
+                document.getElementById('detailsContainer').style.display = 'block';
+                document.getElementById('scrollableContent').style.display = 'block';
             }
         });
     </script>
