@@ -90,6 +90,32 @@
             object-fit: contain; /* or 'cover' based on your preference */
             box-sizing: border-box; /* Ensure padding is included in width calculation */
         }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .scrollable-grid {
+                width: 100%;
+            }
+            .details-container {
+                width: 100%;
+                padding-top: 60px; /* Space for back button */
+            }
+            .details-container h2 {
+                display: flex;
+                align-items: center;
+            }
+            .back-button {
+                display: none;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+            .details-container.active .back-button {
+                display: inline;
+            }
+        }
     </style>
     <!-- Marked library for Markdown conversion -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -113,12 +139,21 @@
             <!-- Add more grid items as needed -->
         </div>
         <div class="details-container" id="detailsContainer">
-            <h2 id="detailsHeading">Achievement Details</h2>
+            <h2 id="detailsHeading">
+                <span class="back-button" id="backButton">&lt;</span>
+                Achievement Details
+            </h2>
             <div id="detailsContent">Select an achievement to see the details.</div>
         </div>
     </div>
 
     <script>
+        const scrollableGrid = document.getElementById('scrollableGrid');
+        const detailsContainer = document.getElementById('detailsContainer');
+        const detailsHeading = document.getElementById('detailsHeading');
+        const detailsContent = document.getElementById('detailsContent');
+        const backButton = document.getElementById('backButton');
+
         document.querySelectorAll('.grid-item').forEach(item => {
             item.addEventListener('click', () => {
                 // Remove selected class from all items
@@ -129,21 +164,53 @@
                 const heading = item.getAttribute('data-heading');
                 const mdFile = item.getAttribute('data-md-file');
                 // Update the heading in the details container
-                document.getElementById('detailsHeading').innerText = heading;
+                detailsHeading.innerText = heading;
+                // Add back button for mobile view
+                if (window.innerWidth <= 768) {
+                    detailsHeading.prepend(backButton);
+                    backButton.style.display = 'inline';
+                }
                 // Fetch the Markdown content and convert it to HTML
                 fetch(mdFile)
                     .then(response => response.text())
                     .then(mdContent => {
                         const htmlContent = marked.parse(mdContent);
-                        document.getElementById('detailsContent').innerHTML = htmlContent;
-                        // Show the details container
-                        document.getElementById('detailsContainer').style.display = 'block';
+                        detailsContent.innerHTML = htmlContent;
+                        // Show the details container and hide the grid list on mobile
+                        detailsContainer.classList.add('active');
+                        detailsContainer.style.display = 'block';
+                        if (window.innerWidth <= 768) {
+                            scrollableGrid.style.display = 'none';
+                        }
                     })
                     .catch(error => {
-                        document.getElementById('detailsContent').innerHTML = '<p>Error loading content.</p>';
+                        detailsContent.innerHTML = '<p>Error loading content.</p>';
                         console.error('Error fetching the Markdown file:', error);
                     });
             });
+        });
+
+        backButton.addEventListener('click', () => {
+            // Hide details and show grid list on mobile
+            detailsContainer.classList.remove('active');
+            scrollableGrid.style.display = 'block';
+            detailsContainer.style.display = 'none';
+            backButton.style.display = 'none';
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.innerWidth <= 768) {
+                const scrollPosition = window.scrollY;
+                const headingPosition = detailsHeading.getBoundingClientRect().top;
+
+                if (scrollPosition > headingPosition) {
+                    backButton.style.position = 'fixed';
+                    backButton.style.top = '10px';
+                } else {
+                    backButton.style.position = 'absolute';
+                    backButton.style.top = 'initial';
+                }
+            }
         });
     </script>
 </body>
