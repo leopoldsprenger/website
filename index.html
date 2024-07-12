@@ -6,62 +6,95 @@
     <title>Dark Gray Background with Navigation</title>
     <style>
         body {
-            background-color: #333; /* Dark gray color */
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .top-bar {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin: 20px;
-        }
-        .left {
-            color: white;
-            font-family: Arial, sans-serif;
-            font-size: 18px;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            font-family: Arial, sans-serif;
-            font-size: 18px;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        nav a.selected {
-            color: lightblue;
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 50px;
-        }
-        .text-container {
-            color: white;
-            margin-right: 50px;
-            text-align: left;
-        }
-        .text-container h1 {
-            font-size: 24px;
-        }
-        .text-container h2 {
-            font-size: 36px;
-        }
-        .text-container p {
-            font-size: 16px;
-        }
-        .image-container img {
-            width: 300px; /* Adjust the size as needed */
-            height: auto;
-        }
+    background-color: #333; /* Dark gray color */
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.top-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px;
+}
+
+.left {
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+nav a.selected {
+    color: lightblue;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap onto new lines */
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    padding: 20px; /* Adds padding for better spacing */
+}
+
+.text-container {
+    color: white;
+    margin-right: 20px; /* Reduced margin for better spacing */
+    text-align: left;
+    flex: 1; /* Allows the text container to grow and shrink */
+}
+
+.text-container h1 {
+    font-size: 24px;
+}
+
+.text-container h2 {
+    font-size: 36px;
+}
+
+.text-container p {
+    font-size: 16px;
+}
+
+.image-container img {
+    width: 100%; /* Make image responsive */
+    max-width: 300px; /* Cap maximum width */
+    height: auto;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Stack text and image vertically on mobile */
+        align-items: center; /* Center align items */
+    }
+    
+    .text-container {
+        margin-right: 0; /* Remove right margin on mobile */
+        text-align: center; /* Center text on mobile */
+        margin-bottom: 20px; /* Add margin below text */
+    }
+    
+    .image-container img {
+        max-width: 100%; /* Ensure the image fits within the container on mobile */
+    }
+}
     </style>
 </head>
 <body>
