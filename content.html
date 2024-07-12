@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Content Page</title>
+    <title>Achievements Page</title>
     <style>
         body {
             background-color: #333; /* Dark gray color */
@@ -44,13 +44,13 @@
             height: calc(100vh - 100px); /* Adjust based on top bar height */
             margin-top: 20px;
         }
-        .scrollable-content, .scrollable-grid {
+        .scrollable-grid {
             width: 30%;
             overflow-y: auto;
             padding: 20px;
             box-sizing: border-box;
         }
-        .content-item, .grid-item {
+        .grid-item {
             margin-bottom: 20px;
             cursor: pointer;
             color: white;
@@ -59,10 +59,15 @@
             display: flex;
             align-items: center;
         }
-        .content-item:hover, .grid-item:hover {
+        .grid-item img {
+            width: 50px; /* Adjust size as needed */
+            height: 50px; /* Adjust size as needed */
+            margin-right: 10px;
+        }
+        .grid-item:hover {
             text-decoration: underline;
         }
-        .content-item.selected, .grid-item.selected {
+        .grid-item.selected {
             color: lightblue;
         }
         .details-container {
@@ -95,31 +100,29 @@
         <nav>
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
-            <a href="content.html" class="selected">Content</a>
-            <a href="achievements.html">Achievements</a>
+            <a href="content.html">Content</a>
+            <a href="achievements.html" class="selected">Achievements</a>
         </nav>
     </div>
     <div class="container">
-        <div class="scrollable-content" id="scrollableContent">
-            <div class="content-item" data-md-file="content/host_your_website_with_github.md" data-heading="Host your website with GitHub">
-                Host your website with GitHub
+        <div class="scrollable-grid" id="scrollableGrid">
+            <div class="grid-item" data-md-file="achievements/personal_website.md" data-heading="Personal website">
+                <img src="imgs/website-icon.png" alt="Achievement 1 Icon">
+                Personal website
             </div>
-            <div class="content-item" data-md-file="content/why_you_need_a_website.md" data-heading="Why you need a website">
-                Why you need a website
-            </div>
-            <!-- Add more content items as needed -->
+            <!-- Add more grid items as needed -->
         </div>
         <div class="details-container" id="detailsContainer">
-            <h2 id="detailsHeading">Content Details</h2>
-            <div id="detailsContent">Select a content item to see the details.</div>
+            <h2 id="detailsHeading">Achievement Details</h2>
+            <div id="detailsContent">Select an achievement to see the details.</div>
         </div>
     </div>
 
     <script>
-        document.querySelectorAll('.content-item').forEach(item => {
+        document.querySelectorAll('.grid-item').forEach(item => {
             item.addEventListener('click', () => {
                 // Remove selected class from all items
-                document.querySelectorAll('.content-item').forEach(i => i.classList.remove('selected'));
+                document.querySelectorAll('.grid-item').forEach(i => i.classList.remove('selected'));
                 // Add selected class to the clicked item
                 item.classList.add('selected');
                 // Get the heading and Markdown file for the clicked item
