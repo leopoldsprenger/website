@@ -8,7 +8,6 @@
         body {
             background-color: #333; /* Dark gray color */
             margin: 0;
-            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -17,15 +16,22 @@
             width: 100%;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            margin: 20px;
-            position: relative;
-            z-index: 10; /* Ensure it's above other content */
+            align-items: center;
+            background-color: #222; /* Darker gray for top bar */
+            position: sticky;
+            top: 0;
+            z-index: 1000; /* Ensure it's above other content */
         }
-        .left {
+        .top-bar .left {
             color: white;
             font-family: Arial, sans-serif;
             font-size: 18px;
+            margin: 10px;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            margin: 10px;
         }
         nav a {
             color: white;
@@ -41,96 +47,56 @@
             color: lightblue;
         }
         .container {
-            display: flex;
             width: 100%;
-            height: calc(100vh - 100px); /* Adjust based on top bar height */
-            margin-top: 20px;
-            flex-direction: row; /* Default to row for desktop */
-            gap: 20px; /* Add gap between sections */
-        }
-        .scrollable-content, .details-container {
-            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: 20px;
-            box-sizing: border-box;
         }
-        .scrollable-content {
-            width: 30%;
-            display: block; /* Default to block for desktop */
+        .content-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
         }
         .content-item {
-            margin-bottom: 20px;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #444; /* Darker background for items */
+            border-radius: 5px;
             cursor: pointer;
             color: white;
             font-family: Arial, sans-serif;
             font-size: 18px;
         }
-        .content-item:hover {
-            text-decoration: underline;
-        }
-        .content-item.selected {
-            color: lightblue;
-        }
         .details-container {
-            width: 70%;
-            display: none; /* Initially hidden */
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
             color: white;
+            display: none; /* Initially hidden */
+            overflow-y: auto;
+            max-height: calc(100vh - 50px); /* Adjust based on top bar height */
+        }
+        .details-container.active {
+            display: block;
         }
         .details-container h2 {
             margin-top: 0;
         }
-        /* Ensure all images have width 100% and height auto */
-        img {
-            width: 100%;
-            height: auto;
-            max-width: 100%; /* Ensure images do not exceed container width */
-            object-fit: contain; /* or 'cover' based on your preference */
-            box-sizing: border-box; /* Ensure padding is included in width calculation */
+        /* Back button styles */
+        .back-button {
+            position: absolute;
+            top: 60px; /* Adjust as needed */
+            left: 10px;
+            background-color: #444; /* Darker background */
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none; /* Initially hidden */
         }
-
-        /* Mobile Styles */
-        @media (max-width: 768px) {
-            .top-bar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                background: #333;
-                padding: 10px;
-                z-index: 20; /* Ensure it's above other content */
-            }
-            .container {
-                flex-direction: column;
-                height: calc(100vh - 60px); /* Adjust for fixed top bar height */
-            }
-            .scrollable-content {
-                width: 100%;
-                display: block; /* Make it full width on mobile */
-            }
-            .details-container {
-                width: 100%;
-            }
-            .scrollable-content, .details-container {
-                padding: 10px;
-            }
-            .back-arrow {
-                display: none; /* Hidden by default */
-                position: fixed;
-                top: 60px; /* Below the top bar */
-                left: 20px;
-                color: white;
-                font-size: 24px;
-                cursor: pointer;
-                z-index: 30; /* Ensure it's above other content */
-                background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-                padding: 10px;
-                border-radius: 5px;
-            }
-            .details-container.show {
-                display: block;
-            }
-            .scrollable-content.show {
-                display: none;
-            }
+        .back-button.active {
+            display: block;
         }
     </style>
     <!-- Marked library for Markdown conversion -->
@@ -147,7 +113,7 @@
         </nav>
     </div>
     <div class="container">
-        <div class="scrollable-content" id="scrollableContent">
+        <div class="content-list" id="contentList">
             <div class="content-item" data-md-file="content/host_your_website_with_github.md" data-heading="Host your website with GitHub">
                 Host your website with GitHub
             </div>
@@ -157,38 +123,35 @@
             <!-- Add more content items as needed -->
         </div>
         <div class="details-container" id="detailsContainer">
-            <h2 id="detailsHeading">Content Details</h2>
-            <div id="detailsContent">Select a content item to see the details.</div>
+            <div id="detailsContent">
+                <button class="back-button" id="backButton">&larr; Back</button>
+            </div>
         </div>
     </div>
-    <div class="back-arrow" id="backArrow">&larr; Back</div>
 
     <script>
+        // Event listener for content items
         document.querySelectorAll('.content-item').forEach(item => {
             item.addEventListener('click', () => {
-                // Remove selected class from all items
-                document.querySelectorAll('.content-item').forEach(i => i.classList.remove('selected'));
-                // Add selected class to the clicked item
-                item.classList.add('selected');
-                // Get the heading and Markdown file for the clicked item
                 const heading = item.getAttribute('data-heading');
                 const mdFile = item.getAttribute('data-md-file');
-                // Update the heading in the details container
-                document.getElementById('detailsHeading').innerText = heading;
+                
+                // Update the details container
+                document.getElementById('detailsContent').innerHTML = '<button class="back-button" id="backButton">&larr; Back</button>';
+                
                 // Fetch the Markdown content and convert it to HTML
                 fetch(mdFile)
                     .then(response => response.text())
                     .then(mdContent => {
                         const htmlContent = marked.parse(mdContent);
-                        document.getElementById('detailsContent').innerHTML = htmlContent;
-                        // Show the details container
-                        document.getElementById('detailsContainer').style.display = 'block';
-                        document.querySelector('.scrollable-content').classList.add('show');
-                        document.querySelector('.details-container').classList.add('show');
-                        // Show back arrow on mobile
-                        if (window.innerWidth <= 768) {
-                            document.getElementById('backArrow').style.display = 'block';
-                        }
+                        document.getElementById('detailsContent').innerHTML += htmlContent;
+                        
+                        // Show the details container and back button
+                        document.getElementById('detailsContainer').classList.add('active');
+                        document.getElementById('backButton').classList.add('active');
+                        
+                        // Scroll to top of details container
+                        document.getElementById('detailsContainer').scrollTop = 0;
                     })
                     .catch(error => {
                         document.getElementById('detailsContent').innerHTML = '<p>Error loading content.</p>';
@@ -196,19 +159,22 @@
                     });
             });
         });
-
-        // Back arrow functionality
-        document.getElementById('backArrow').addEventListener('click', () => {
-            document.getElementById('detailsContainer').style.display = 'none';
-            document.querySelector('.scrollable-content').classList.remove('show');
-            document.querySelector('.details-container').classList.remove('show');
-            document.getElementById('backArrow').style.display = 'none';
+        
+        // Event listener for back button
+        document.getElementById('backButton').addEventListener('click', () => {
+            // Hide details container and back button
+            document.getElementById('detailsContainer').classList.remove('active');
+            document.getElementById('backButton').classList.remove('active');
         });
-
-        // Hide back arrow on load if not on mobile
-        if (window.innerWidth > 768) {
-            document.getElementById('backArrow').style.display = 'none';
-        }
+        
+        // Handle window resize to adjust layout
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                // Reset to desktop view
+                document.getElementById('detailsContainer').classList.remove('active');
+                document.getElementById('backButton').classList.remove('active');
+            }
+        });
     </script>
 </body>
 </html>
