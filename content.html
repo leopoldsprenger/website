@@ -18,6 +18,7 @@
             justify-content: space-between;
             align-items: flex-start;
             margin: 20px;
+            background-color: #333; /* Keep the background flush with the rest */
         }
         .left {
             color: white;
@@ -56,6 +57,7 @@
             font-family: Arial, sans-serif;
             font-size: 18px;
             cursor: pointer;
+            background-color: transparent; /* Ensure items blend with background */
         }
         .content-item:hover {
             text-decoration: underline;
@@ -68,28 +70,27 @@
             display: none; /* Initially hidden */
             overflow-y: auto;
             max-height: calc(100vh - 50px); /* Adjust based on top bar height */
+            background-color: #333; /* Ensure background matches */
+            position: relative; /* For positioning back button */
         }
         .details-container.active {
             display: block;
         }
         .details-container h2 {
             margin-top: 0;
+            padding-left: 30px; /* Space for back button */
         }
         /* Back button styles */
         .back-button {
-            position: fixed;
-            top: 70px; /* Adjusted position */
+            position: absolute;
+            top: 20px; /* Adjust position */
             left: 10px;
-            background-color: #444; /* Darker background */
+            background: none;
             color: white;
-            padding: 10px;
-            border-radius: 5px;
+            font-size: 24px;
+            border: none;
             cursor: pointer;
-            display: none; /* Initially hidden */
             z-index: 1000; /* Ensure it's above other content */
-        }
-        .back-button.active {
-            display: block;
         }
         /* Ensure all images fit well */
         img {
@@ -105,7 +106,6 @@
                 position: sticky;
                 top: 0;
                 z-index: 1000; /* Ensure it's above other content */
-                background-color: #333; /* Dark gray color */
             }
             .container {
                 padding: 10px; /* Adjust padding for better spacing */
@@ -125,7 +125,8 @@
             }
             .back-button {
                 top: 10px; /* Adjusted position */
-                z-index: 1100; /* Ensure above details container */
+                left: 10px; /* Ensure it stays in view */
+                font-size: 24px; /* Adjust size for mobile */
             }
         }
     </style>
@@ -153,7 +154,8 @@
             <!-- Add more content items as needed -->
         </div>
         <div class="details-container" id="detailsContainer">
-            <button class="back-button" id="backButton">&larr; Back</button>
+            <button class="back-button" id="backButton">&larr;</button>
+            <h2 id="detailsHeading">Content Details</h2>
             <div id="detailsContent">Select a content item to see the details.</div>
         </div>
     </div>
@@ -169,16 +171,14 @@
                 document.getElementById('contentList').style.display = 'none';
                 document.getElementById('detailsContainer').classList.add('active');
                 document.getElementById('backButton').classList.add('active');
-                
-                // Update the details container
-                document.getElementById('detailsContent').innerHTML = '<button class="back-button" id="backButton">&larr; Back</button>';
+                document.getElementById('detailsHeading').innerText = heading;
                 
                 // Fetch the Markdown content and convert it to HTML
                 fetch(mdFile)
                     .then(response => response.text())
                     .then(mdContent => {
                         const htmlContent = marked.parse(mdContent);
-                        document.getElementById('detailsContent').innerHTML += htmlContent;
+                        document.getElementById('detailsContent').innerHTML = htmlContent;
                         
                         // Scroll to top of details container
                         document.getElementById('detailsContainer').scrollTop = 0;
