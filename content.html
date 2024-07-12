@@ -13,22 +13,18 @@
             flex-direction: column;
             align-items: center;
         }
-        
         .top-bar {
             width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin: 20px;
-            background-color: #333; /* Keep the background flush with the rest */
         }
-        
         .left {
             color: white;
             font-family: Arial, sans-serif;
             font-size: 18px;
         }
-        
         nav a {
             color: white;
             text-decoration: none;
@@ -36,29 +32,24 @@
             font-family: Arial, sans-serif;
             font-size: 18px;
         }
-        
         nav a:hover {
             text-decoration: underline;
         }
-        
         nav a.selected {
             color: lightblue;
         }
-        
         .container {
             display: flex;
             width: 100%;
             height: calc(100vh - 100px); /* Adjust based on top bar height */
             margin-top: 20px;
         }
-        
         .scrollable-content, .scrollable-grid {
             width: 30%;
             overflow-y: auto;
             padding: 20px;
             box-sizing: border-box;
         }
-        
         .content-item, .grid-item {
             margin-bottom: 20px;
             cursor: pointer;
@@ -68,15 +59,12 @@
             display: flex;
             align-items: center;
         }
-        
         .content-item:hover, .grid-item:hover {
             text-decoration: underline;
         }
-        
         .content-item.selected, .grid-item.selected {
             color: lightblue;
         }
-        
         .details-container {
             width: 70%;
             padding: 20px;
@@ -86,11 +74,9 @@
             overflow-y: auto;
             max-height: 100%; /* Ensure it doesn’t overflow the page */
         }
-        
         .details-container h2 {
             margin-top: 0;
         }
-        
         /* Ensure all images have width 100% and height auto */
         img {
             width: 100%;
@@ -98,64 +84,6 @@
             max-width: 100%; /* Ensure images do not exceed container width */
             object-fit: contain; /* or 'cover' based on your preference */
             box-sizing: border-box; /* Ensure padding is included in width calculation */
-        }
-        
-        /* Mobile styles */
-        @media (max-width: 768px) {
-            .container {
-                height: calc(100vh - 50px); /* Adjust based on top bar height */
-                margin-top: 0;
-                flex-direction: column;
-            }
-            
-            .scrollable-content {
-                width: 100%;
-            }
-            
-            .scrollable-grid {
-                display: none; /* Hide grid on mobile */
-            }
-            
-            .details-container {
-                width: 100%;
-                position: fixed;
-                top: 50px; /* Adjust top position */
-                left: 0;
-                height: calc(100vh - 50px);
-                background-color: #333; /* Ensure background matches */
-                overflow-y: auto;
-            }
-            
-            .back-button {
-                position: absolute;
-                top: 10px; /* Adjusted position */
-                left: 10px; /* Ensure it stays in view */
-                background: none;
-                color: white;
-                font-size: 24px; /* Adjust size for mobile */
-                border: none;
-                cursor: pointer;
-                z-index: 1000; /* Ensure it's above other content */
-            }
-            
-            .details-container.active {
-                display: block;
-            }
-        }
-        
-        /* Desktop styles */
-        @media (min-width: 769px) {
-            .scrollable-content {
-                width: 30%;
-            }
-            
-            .scrollable-grid {
-                display: block; /* Show grid on desktop */
-            }
-            
-            .details-container {
-                display: block;
-            }
         }
     </style>
     <!-- Marked library for Markdown conversion -->
@@ -182,14 +110,12 @@
             <!-- Add more content items as needed -->
         </div>
         <div class="details-container" id="detailsContainer">
-            <button class="back-button" id="backButton">&larr;</button>
             <h2 id="detailsHeading">Content Details</h2>
             <div id="detailsContent">Select a content item to see the details.</div>
         </div>
     </div>
 
     <script>
-        // Event listener for content items
         document.querySelectorAll('.content-item').forEach(item => {
             item.addEventListener('click', () => {
                 // Remove selected class from all items
@@ -215,22 +141,6 @@
                         console.error('Error fetching the Markdown file:', error);
                     });
             });
-        });
-        
-        // Event listener for back button
-        document.getElementById('backButton').addEventListener('click', () => {
-            // Show content list and hide details container
-            document.getElementById('scrollableContent').style.display = 'block';
-            document.getElementById('detailsContainer').style.display = 'none';
-        });
-        
-        // Handle window resize to adjust layout
-        window.addEventListener('resize', () => {
-            if (window.innerWidth >= 768) {
-                // Reset to desktop view
-                document.getElementById('detailsContainer').style.display = 'block';
-                document.getElementById('scrollableContent').style.display = 'block';
-            }
         });
     </script>
 </body>
