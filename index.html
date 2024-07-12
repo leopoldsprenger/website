@@ -16,22 +16,13 @@
             width: 100%;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-            background-color: #333; /* Ensure it matches the rest of the page */
-            position: sticky;
-            top: 0;
-            z-index: 1000; /* Ensure it's above other content */
+            align-items: flex-start;
+            margin: 20px;
         }
         .left {
             color: white;
             font-family: Arial, sans-serif;
             font-size: 18px;
-        }
-        nav {
-            display: flex;
-            align-items: center;
         }
         nav a {
             color: white;
@@ -52,13 +43,11 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            box-sizing: border-box;
         }
         .content-list {
             width: 100%;
             display: flex;
             flex-direction: column;
-            align-items: center;
         }
         .content-item {
             margin: 10px 0;
@@ -67,7 +56,6 @@
             font-family: Arial, sans-serif;
             font-size: 18px;
             cursor: pointer;
-            background: none; /* Remove background color */
         }
         .content-item:hover {
             text-decoration: underline;
@@ -79,7 +67,7 @@
             color: white;
             display: none; /* Initially hidden */
             overflow-y: auto;
-            max-height: calc(100vh - 70px); /* Adjust based on top bar height and padding */
+            max-height: calc(100vh - 50px); /* Adjust based on top bar height */
         }
         .details-container.active {
             display: block;
@@ -90,7 +78,7 @@
         /* Back button styles */
         .back-button {
             position: fixed;
-            top: 80px; /* Adjusted position */
+            top: 70px; /* Adjusted position */
             left: 10px;
             background-color: #444; /* Darker background */
             color: white;
@@ -113,11 +101,31 @@
         }
         /* Media query for mobile devices */
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
+            .top-bar {
+                position: sticky;
+                top: 0;
+                z-index: 1000; /* Ensure it's above other content */
+                background-color: #333; /* Dark gray color */
             }
-            .details-container {
-                max-height: calc(100vh - 50px); /* Adjust based on top bar height */
+            .container {
+                padding: 10px; /* Adjust padding for better spacing */
+            }
+            .content-list {
+                flex-direction: column; /* Stack items vertically */
+                align-items: center; /* Center items */
+            }
+            .details-container.active {
+                position: fixed;
+                top: 50px; /* Adjust top position */
+                left: 0;
+                width: 100%;
+                height: calc(100vh - 50px);
+                background-color: #333; /* Dark gray color */
+                overflow-y: auto;
+            }
+            .back-button {
+                top: 10px; /* Adjusted position */
+                z-index: 1100; /* Ensure above details container */
             }
         }
     </style>
@@ -163,14 +171,14 @@
                 document.getElementById('backButton').classList.add('active');
                 
                 // Update the details container
-                document.getElementById('detailsContent').innerHTML = '';
+                document.getElementById('detailsContent').innerHTML = '<button class="back-button" id="backButton">&larr; Back</button>';
                 
                 // Fetch the Markdown content and convert it to HTML
                 fetch(mdFile)
                     .then(response => response.text())
                     .then(mdContent => {
                         const htmlContent = marked.parse(mdContent);
-                        document.getElementById('detailsContent').innerHTML = htmlContent;
+                        document.getElementById('detailsContent').innerHTML += htmlContent;
                         
                         // Scroll to top of details container
                         document.getElementById('detailsContainer').scrollTop = 0;
