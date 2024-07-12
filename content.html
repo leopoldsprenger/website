@@ -76,14 +76,6 @@
         }
         .details-container h2 {
             margin-top: 0;
-            display: flex;
-            align-items: center;
-        }
-        .back-arrow {
-            cursor: pointer;
-            margin-right: 10px;
-            font-size: 24px;
-            display: none; /* Hidden initially */
         }
         /* Ensure all images have width 100% and height auto */
         img {
@@ -93,26 +85,30 @@
             object-fit: contain; /* or 'cover' based on your preference */
             box-sizing: border-box; /* Ensure padding is included in width calculation */
         }
+
+        /* Mobile-specific styles */
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
             }
             .scrollable-content {
                 width: 100%;
-                display: block;
             }
             .details-container {
                 width: 100%;
-                display: block;
+                padding-top: 60px; /* Space for back button */
             }
-            .details-container.active {
-                display: block;
+            .details-container h2 {
+                display: flex;
+                align-items: center;
             }
-            .scrollable-content.active {
+            .back-button {
                 display: none;
+                margin-right: 10px;
+                cursor: pointer;
             }
-            .back-arrow {
-                display: inline-block;
+            .details-container.active .back-button {
+                display: inline;
             }
         }
     </style>
@@ -141,7 +137,7 @@
         </div>
         <div class="details-container" id="detailsContainer">
             <h2 id="detailsHeading">
-                <span class="back-arrow" onclick="goBack()">&#x3C;</span>
+                <span class="back-button" id="backButton">&lt;</span>
                 Content Details
             </h2>
             <div id="detailsContent">Select a content item to see the details.</div>
@@ -149,11 +145,11 @@
     </div>
 
     <script>
-        function goBack() {
-            document.getElementById('detailsContainer').classList.remove('active');
-            document.getElementById('scrollableContent').classList.remove('active');
-            window.scrollTo(0, 0);
-        }
+        const scrollableContent = document.getElementById('scrollableContent');
+        const detailsContainer = document.getElementById('detailsContainer');
+        const detailsHeading = document.getElementById('detailsHeading');
+        const detailsContent = document.getElementById('detailsContent');
+        const backButton = document.getElementById('backButton');
 
         document.querySelectorAll('.content-item').forEach(item => {
             item.addEventListener('click', () => {
@@ -165,16 +161,56 @@
                 const heading = item.getAttribute('data-heading');
                 const mdFile = item.getAttribute('data-md-file');
                 // Update the heading in the details container
-                document.getElementById('detailsHeading').innerText = heading;
+                detailsHeading.innerText = heading;
+                // Add back button for mobile view
+                if (window.innerWidth <= 768) {
+                    detailsHeading.prepend(backButton);
+                    backButton.style.display = 'inline';
+                    document.querySelector('.top-bar').style.display = 'none';
+                }
                 // Fetch the Markdown content and convert it to HTML
                 fetch(mdFile)
                     .then(response => response.text())
                     .then(mdContent => {
                         const htmlContent = marked.parse(mdContent);
-                        document.getElementById('detailsContent').innerHTML = htmlContent;
-                        // Show the details container and hide the content list on small screens
-                        document.getElementById('detailsContainer').classList.add('active');
-                        document.getElementById('scrollableContent').classList.add('active');
+                        detailsContent.innerHTML = htmlContent;
+                        // Show the details container and hide the content list on mobile
+                        detailsContainer.classList.add('active');
+                        detailsContainer.style.display = 'block';
+                        if (window.innerWidth <= 768) {
+                            scrollableContent.style.display = 'none';
+                        }
                     })
                     .catch(error => {
-                        document.getElementById('detailsConten
+                        detailsContent.innerHTML = '<p>Error loading content.</p>';
+                        console.error('Error fetching the Markdown file:', error);
+                    });
+            });
+        });
+
+        backButton.addEventListener('click', () => {
+            // Hide details and show content list on mobile
+            detailsContainer.classList.remove('active');
+            scrollableContent.style.display = 'block';
+            detailsContainer.style.display = 'none';
+            backButton.style.display = 'none';
+            document.querySelector('.top-bar').style.display = 'flex';
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.innerWidth <= 768) {
+                const scrollPosition = window.scrollY;
+                const headingPosition = detailsHeading.getBoundingClientRect().top;
+
+                if (scrollPosition > headingPosition) {
+                    backButton.style.position = 'fixed';
+                    backButton.style.top = '10px';
+                } else {
+                    backButton.style.position = 'absolute';
+                    backButton.style.top = 'initial';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
