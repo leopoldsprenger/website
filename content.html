@@ -6,85 +6,110 @@
     <title>Content Page</title>
     <style>
         body {
-            background-color: #333; /* Dark gray color */
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .top-bar {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin: 20px;
-        }
-        .left {
-            color: white;
-            font-family: Arial, sans-serif;
-            font-size: 18px;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            font-family: Arial, sans-serif;
-            font-size: 18px;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        nav a.selected {
-            color: lightblue;
-        }
-        .container {
-            display: flex;
-            width: 100%;
-            height: calc(100vh - 100px); /* Adjust based on top bar height */
-            margin-top: 20px;
-        }
-        .scrollable-content, .scrollable-grid {
-            width: 30%;
-            overflow-y: auto;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .content-item, .grid-item {
-            margin-bottom: 20px;
-            cursor: pointer;
-            color: white;
-            font-family: Arial, sans-serif;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-        }
-        .content-item:hover, .grid-item:hover {
-            text-decoration: underline;
-        }
-        .content-item.selected, .grid-item.selected {
-            color: lightblue;
-        }
-        .details-container {
-            width: 70%;
-            padding: 20px;
-            box-sizing: border-box;
-            color: white;
-            display: none; /* Initially hidden */
-            overflow-y: auto;
-            max-height: 100%; /* Ensure it doesn’t overflow the page */
-        }
-        .details-container h2 {
-            margin-top: 0;
-        }
-        /* Ensure all images have width 100% and height auto */
-        img {
-            width: 100%;
-            height: auto;
-            max-width: 100%; /* Ensure images do not exceed container width */
-            object-fit: contain; /* or 'cover' based on your preference */
-            box-sizing: border-box; /* Ensure padding is included in width calculation */
-        }
+    background-color: #333; /* Dark gray color */
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.top-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px;
+}
+
+.left {
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+nav a.selected {
+    color: lightblue;
+}
+
+.container {
+    display: flex;
+    flex-direction: row; /* Default layout for larger screens */
+    width: 100%;
+    height: calc(100vh - 100px); /* Adjust based on top bar height */
+    margin-top: 20px;
+}
+
+.scrollable-content, .details-container {
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.scrollable-content {
+    width: 30%;
+    background: #444; /* Optional: background color for better contrast */
+}
+
+.details-container {
+    width: 70%;
+    color: white;
+    display: none; /* Initially hidden */
+    max-height: 100%; /* Ensure it doesn’t overflow the page */
+}
+
+.scrollable-content .content-item, .details-container .grid-item {
+    margin-bottom: 20px;
+    cursor: pointer;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.scrollable-content .content-item:hover, .details-container .grid-item:hover {
+    text-decoration: underline;
+}
+
+.scrollable-content .content-item.selected, .details-container .grid-item.selected {
+    color: lightblue;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    max-width: 100%; /* Ensure images do not exceed container width */
+    object-fit: contain; /* or 'cover' based on your preference */
+    box-sizing: border-box; /* Ensure padding is included in width calculation */
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Stack columns vertically on mobile */
+    }
+    
+    .scrollable-content {
+        width: 100%; /* Full width for mobile */
+    }
+    
+    .details-container {
+        width: 100%; /* Full width for mobile */
+    }
+}
     </style>
     <!-- Marked library for Markdown conversion -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
