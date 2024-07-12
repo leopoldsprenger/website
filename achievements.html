@@ -101,7 +101,7 @@
             }
             .details-container {
                 width: 100%;
-                padding-top: 60px; /* Space for back button */
+                padding-top: 10px; /* Reduced space for better alignment */
             }
             .details-container h2 {
                 display: flex;
@@ -176,7 +176,7 @@
                     .then(mdContent => {
                         const htmlContent = marked.parse(mdContent);
                         detailsContent.innerHTML = htmlContent;
-                        // Show the details container and hide the grid list on mobile
+                        // Show the details container and hide the content list on mobile
                         detailsContainer.classList.add('active');
                         detailsContainer.style.display = 'block';
                         if (window.innerWidth <= 768) {
@@ -191,7 +191,7 @@
         });
 
         backButton.addEventListener('click', () => {
-            // Hide details and show grid list on mobile
+            // Hide details and show content list on mobile
             detailsContainer.classList.remove('active');
             scrollableGrid.style.display = 'block';
             detailsContainer.style.display = 'none';
