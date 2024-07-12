@@ -76,6 +76,14 @@
         }
         .details-container h2 {
             margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+        .back-arrow {
+            cursor: pointer;
+            margin-right: 10px;
+            font-size: 24px;
+            display: none; /* Hidden initially */
         }
         /* Ensure all images have width 100% and height auto */
         img {
@@ -84,6 +92,28 @@
             max-width: 100%; /* Ensure images do not exceed container width */
             object-fit: contain; /* or 'cover' based on your preference */
             box-sizing: border-box; /* Ensure padding is included in width calculation */
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .scrollable-content {
+                width: 100%;
+                display: block;
+            }
+            .details-container {
+                width: 100%;
+                display: block;
+            }
+            .details-container.active {
+                display: block;
+            }
+            .scrollable-content.active {
+                display: none;
+            }
+            .back-arrow {
+                display: inline-block;
+            }
         }
     </style>
     <!-- Marked library for Markdown conversion -->
@@ -110,12 +140,21 @@
             <!-- Add more content items as needed -->
         </div>
         <div class="details-container" id="detailsContainer">
-            <h2 id="detailsHeading">Content Details</h2>
+            <h2 id="detailsHeading">
+                <span class="back-arrow" onclick="goBack()">&#x3C;</span>
+                Content Details
+            </h2>
             <div id="detailsContent">Select a content item to see the details.</div>
         </div>
     </div>
 
     <script>
+        function goBack() {
+            document.getElementById('detailsContainer').classList.remove('active');
+            document.getElementById('scrollableContent').classList.remove('active');
+            window.scrollTo(0, 0);
+        }
+
         document.querySelectorAll('.content-item').forEach(item => {
             item.addEventListener('click', () => {
                 // Remove selected class from all items
@@ -133,15 +172,9 @@
                     .then(mdContent => {
                         const htmlContent = marked.parse(mdContent);
                         document.getElementById('detailsContent').innerHTML = htmlContent;
-                        // Show the details container
-                        document.getElementById('detailsContainer').style.display = 'block';
+                        // Show the details container and hide the content list on small screens
+                        document.getElementById('detailsContainer').classList.add('active');
+                        document.getElementById('scrollableContent').classList.add('active');
                     })
                     .catch(error => {
-                        document.getElementById('detailsContent').innerHTML = '<p>Error loading content.</p>';
-                        console.error('Error fetching the Markdown file:', error);
-                    });
-            });
-        });
-    </script>
-</body>
-</html>
+                        document.getElementById('detailsConten
