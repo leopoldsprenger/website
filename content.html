@@ -78,26 +78,23 @@
         .details-container h2 {
             margin-top: 0;
         }
-        /* Ensure all images have width 100% and height auto */
         img {
             width: 100%;
             height: auto;
-            max-width: 100%; /* Ensure images do not exceed container width */
-            object-fit: contain; /* or 'cover' based on your preference */
-            box-sizing: border-box; /* Ensure padding is included in width calculation */
+            max-width: 100%;
+            object-fit: contain;
+            box-sizing: border-box;
         }
 
-        /* Large screen-specific styles */
         @media (min-width: 769px) {
             img {
                 width: 75%;
-                display: block; /* Ensure image is a block element */
+                display: block;
                 margin-left: auto;
-                margin-right: auto; /* Center-align the image */
+                margin-right: auto;
             }
         }
 
-        /* Mobile-specific styles */
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -107,7 +104,7 @@
             }
             .details-container {
                 width: 100%;
-                padding-top: 10px; /* Reduced space for better alignment */
+                padding-top: 10px;
             }
             .details-container h2 {
                 display: flex;
@@ -123,8 +120,8 @@
             }
         }
     </style>
-    <!-- Marked library for Markdown conversion -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="router.js"></script>
 </head>
 <body>
     <div class="top-bar">
@@ -156,69 +153,42 @@
     </div>
 
     <script>
-        const scrollableContent = document.getElementById('scrollableContent');
-        const detailsContainer = document.getElementById('detailsContainer');
-        const detailsHeading = document.getElementById('detailsHeading');
-        const detailsContent = document.getElementById('detailsContent');
-        const backButton = document.getElementById('backButton');
+        document.addEventListener('DOMContentLoaded', () => {
+            const detailsContainer = document.getElementById('detailsContainer');
+            const detailsHeading = document.getElementById('detailsHeading');
+            const detailsContent = document.getElementById('detailsContent');
+            const backButton = document.getElementById('backButton');
 
-        document.querySelectorAll('.content-item').forEach(item => {
-            item.addEventListener('click', () => {
-                // Remove selected class from all items
+            // Function to handle content item clicks
+            const handleContentClick = (item) => {
                 document.querySelectorAll('.content-item').forEach(i => i.classList.remove('selected'));
-                // Add selected class to the clicked item
                 item.classList.add('selected');
-                // Get the heading and Markdown file for the clicked item
+
                 const heading = item.getAttribute('data-heading');
                 const mdFile = item.getAttribute('data-md-file');
-                // Update the heading in the details container
+
                 detailsHeading.innerText = heading;
-                // Add back button for mobile view
+
                 if (window.innerWidth <= 768) {
                     detailsHeading.prepend(backButton);
-                    backButton.style.display = 'inline';
+                    detailsContainer.classList.add('active');
                 }
-                // Fetch the Markdown content and convert it to HTML
+
                 fetch(mdFile)
                     .then(response => response.text())
-                    .then(mdContent => {
-                        const htmlContent = marked.parse(mdContent);
-                        detailsContent.innerHTML = htmlContent;
-                        // Show the details container and hide the content list on mobile
-                        detailsContainer.classList.add('active');
-                        detailsContainer.style.display = 'block';
-                        if (window.innerWidth <= 768) {
-                            scrollableContent.style.display = 'none';
-                        }
-                    })
-                    .catch(error => {
-                        detailsContent.innerHTML = '<p>Error loading content.</p>';
-                        console.error('Error fetching the Markdown file:', error);
+                    .then(markdown => {
+                        detailsContent.innerHTML = marked.parse(markdown);
                     });
+            };
+
+            document.querySelectorAll('.content-item').forEach(item => {
+                item.addEventListener('click', () => handleContentClick(item));
             });
-        });
 
-        backButton.addEventListener('click', () => {
-            // Hide details and show content list on mobile
-            detailsContainer.classList.remove('active');
-            scrollableContent.style.display = 'block';
-            detailsContainer.style.display = 'none';
-            backButton.style.display = 'none';
-        });
-
-        window.addEventListener('scroll', () => {
-            if (window.innerWidth <= 768) {
-                const scrollPosition = window.scrollY;
-                const headingPosition = detailsHeading.getBoundingClientRect().top;
-
-                if (scrollPosition > headingPosition) {
-                    backButton.style.position = 'fixed';
-                    backButton.style.top = '10px';
-                } else {
-                    backButton.style.position = 'absolute';
-                    backButton.style.top = 'initial';
-                }
-            }
+            backButton.addEventListener('click', () => {
+                detailsContainer.classList.remove('active');
+                document.querySelectorAll('.content-item').forEach(i => i.classList.remove('selected'));
+            });
         });
     </script>
 </body>
