@@ -20,5 +20,5 @@ Now I can just create and edit my content with markdown instead of directly edit
 
 __Saturday, 13.07.2024__
 
-I changed the formatting of the website, so now the css changes if your on a small screen like a phone to have a better viewing experience there. 
+I changed the formatting of the website, so now the css changes if you're on a small screen like a phone to have a better viewing experience there. 
 The PC experience stays the same, except for making the images 3/4 the size on PC so they take up less space.
