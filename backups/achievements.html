@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements Page</title>
+    <style>
+        body {
+            background-color: #333; /* Dark gray color */
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 20px;
+        }
+        .left {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            padding-left: 10px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        nav a.selected {
+            color: lightblue;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            height: calc(100vh - 100px); /* Adjust based on top bar height */
+            margin-top: 20px;
+        }
+        .scrollable-grid {
+            width: 30%;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .grid-item {
+            margin-bottom: 20px;
+            cursor: pointer;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+        .grid-item img {
+            width: 50px; /* Adjust size as needed */
+            height: 50px; /* Adjust size as needed */
+            margin-right: 10px;
+        }
+        .grid-item:hover {
+            text-decoration: underline;
+        }
+        .grid-item.selected {
+            color: lightblue;
+        }
+        .details-container {
+            width: 70%;
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+            display: none; /* Initially hidden */
+            overflow-y: auto;
+            max-height: 100%; /* Ensure it doesn’t overflow the page */
+        }
+        .details-container h2 {
+            margin-top: 0;
+        }
+        /* Ensure all images have width 100% and height auto */
+        img {
+            width: 100%;
+            height: auto;
+            max-width: 100%; /* Ensure images do not exceed container width */
+            object-fit: contain; /* or 'cover' based on your preference */
+            box-sizing: border-box; /* Ensure padding is included in width calculation */
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .scrollable-grid {
+                width: 100%;
+            }
+            .details-container {
+                width: 100%;
+                padding-top: 10px; /* Reduced space for better alignment */
+            }
+            .details-container h2 {
+                display: flex;
+                align-items: center;
+            }
+            .back-button {
+                display: none;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+            .details-container.active .back-button {
+                display: inline;
+            }
+        }
+    </style>
+    <!-- Marked library for Markdown conversion -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="left">Leopold Sprenger</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="content.html">Content</a>
+            <a href="achievements.html" class="selected">Achievements</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="scrollable-grid" id="scrollableGrid">
+            <div class="grid-item" data-md-file="achievements/personal_website.md" data-heading="Personal website">
+                <img src="imgs/website-icon.png" alt="Achievement 1 Icon">
+                Personal website
+            </div>
+            <!-- Add more grid items as needed -->
+        </div>
+        <div class="details-container" id="detailsContainer">
+            <h2 id="detailsHeading">
+                <span class="back-button" id="backButton">&lt;</span>
+                Achievement Details
+            </h2>
+            <div id="detailsContent">Select an achievement to see the details.</div>
+        </div>
+    </div>
+
+    <script>
+        const scrollableGrid = document.getElementById('scrollableGrid');
+        const detailsContainer = document.getElementById('detailsContainer');
+        const detailsHeading = document.getElementById('detailsHeading');
+        const detailsContent = document.getElementById('detailsContent');
+        const backButton = document.getElementById('backButton');
+
+        document.querySelectorAll('.grid-item').forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove selected class from all items
+                document.querySelectorAll('.grid-item').forEach(i => i.classList.remove('selected'));
+                // Add selected class to the clicked item
+                item.classList.add('selected');
+                // Get the heading and Markdown file for the clicked item
+                const heading = item.getAttribute('data-heading');
+                const mdFile = item.getAttribute('data-md-file');
+                // Update the heading in the details container
+                detailsHeading.innerText = heading;
+                // Add back button for mobile view
+                if (window.innerWidth <= 768) {
+                    detailsHeading.prepend(backButton);
+                    backButton.style.display = 'inline';
+                }
+                // Fetch the Markdown content and convert it to HTML
+                fetch(mdFile)
+                    .then(response => response.text())
+                    .then(mdContent => {
+                        const htmlContent = marked.parse(mdContent);
+                        detailsContent.innerHTML = htmlContent;
+                        // Show the details container and hide the content list on mobile
+                        detailsContainer.classList.add('active');
+                        detailsContainer.style.display = 'block';
+                        if (window.innerWidth <= 768) {
+                            scrollableGrid.style.display = 'none';
+                        }
+                    })
+                    .catch(error => {
+                        detailsContent.innerHTML = '<p>Error loading content.</p>';
+                        console.error('Error fetching the Markdown file:', error);
+                    });
+            });
+        });
+
+        backButton.addEventListener('click', () => {
+            // Hide details and show content list on mobile
+            detailsContainer.classList.remove('active');
+            scrollableGrid.style.display = 'block';
+            detailsContainer.style.display = 'none';
+            backButton.style.display = 'none';
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.innerWidth <= 768) {
+                const scrollPosition = window.scrollY;
+                const headingPosition = detailsHeading.getBoundingClientRect().top;
+
+                if (scrollPosition > headingPosition) {
+                    backButton.style.position = 'fixed';
+                    backButton.style.top = '10px';
+                } else {
+                    backButton.style.position = 'absolute';
+                    backButton.style.top = 'initial';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
