@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Page</title>
+    <style>
+        body {
+            background-color: #333; /* Dark gray color */
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 20px;
+        }
+        .left {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            padding-left: 10px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        nav a.selected {
+            color: lightblue;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            height: calc(100vh - 100px); /* Adjust based on top bar height */
+            margin-top: 20px;
+        }
+        .scrollable-content, .scrollable-grid {
+            width: 30%;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .content-item, .grid-item {
+            margin-bottom: 20px;
+            cursor: pointer;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+        .content-item:hover, .grid-item:hover {
+            text-decoration: underline;
+        }
+        .content-item.selected, .grid-item.selected {
+            color: lightblue;
+        }
+        .details-container {
+            width: 70%;
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+            display: none; /* Initially hidden */
+            overflow-y: auto;
+            max-height: 100%; /* Ensure it doesn’t overflow the page */
+        }
+        .details-container h2 {
+            margin-top: 0;
+        }
+        /* Ensure all images have width 100% and height auto */
+        img {
+            width: 100%;
+            height: auto;
+            max-width: 100%; /* Ensure images do not exceed container width */
+            object-fit: contain; /* or 'cover' based on your preference */
+            box-sizing: border-box; /* Ensure padding is included in width calculation */
+        }
+
+        /* Large screen-specific styles */
+        @media (min-width: 769px) {
+            img {
+                width: 75%;
+                display: block; /* Ensure image is a block element */
+                margin-left: auto;
+                margin-right: auto; /* Center-align the image */
+            }
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .scrollable-content {
+                width: 100%;
+            }
+            .details-container {
+                width: 100%;
+                padding-top: 10px; /* Reduced space for better alignment */
+            }
+            .details-container h2 {
+                display: flex;
+                align-items: center;
+            }
+            .back-button {
+                display: none;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+            .details-container.active .back-button {
+                display: inline;
+            }
+        }
+    </style>
+    <!-- Marked library for Markdown conversion -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="left">Leopold Sprenger</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="content.html" class="selected">Content</a>
+            <a href="achievements.html">Achievements</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="scrollable-content" id="scrollableContent">
+            <div class="content-item" data-md-file="content/host_your_website_with_github.md" data-heading="Host your website with GitHub">
+                Host your website with GitHub
+            </div>
+            <div class="content-item" data-md-file="content/why_you_need_a_website.md" data-heading="Why you need a website">
+                Why you need a website
+            </div>
+            <!-- Add more content items as needed -->
+        </div>
+        <div class="details-container" id="detailsContainer">
+            <h2 id="detailsHeading">
+                <span class="back-button" id="backButton">&lt;</span>
+                Content Details
+            </h2>
+            <div id="detailsContent">Select a content item to see the details.</div>
+        </div>
+    </div>
+
+    <script>
+        const scrollableContent = document.getElementById('scrollableContent');
+        const detailsContainer = document.getElementById('detailsContainer');
+        const detailsHeading = document.getElementById('detailsHeading');
+        const detailsContent = document.getElementById('detailsContent');
+        const backButton = document.getElementById('backButton');
+
+        document.querySelectorAll('.content-item').forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove selected class from all items
+                document.querySelectorAll('.content-item').forEach(i => i.classList.remove('selected'));
+                // Add selected class to the clicked item
+                item.classList.add('selected');
+                // Get the heading and Markdown file for the clicked item
+                const heading = item.getAttribute('data-heading');
+                const mdFile = item.getAttribute('data-md-file');
+                // Update the heading in the details container
+                detailsHeading.innerText = heading;
+                // Add back button for mobile view
+                if (window.innerWidth <= 768) {
+                    detailsHeading.prepend(backButton);
+                    backButton.style.display = 'inline';
+                }
+                // Fetch the Markdown content and convert it to HTML
+                fetch(mdFile)
+                    .then(response => response.text())
+                    .then(mdContent => {
+                        const htmlContent = marked.parse(mdContent);
+                        detailsContent.innerHTML = htmlContent;
+                        // Show the details container and hide the content list on mobile
+                        detailsContainer.classList.add('active');
+                        detailsContainer.style.display = 'block';
+                        if (window.innerWidth <= 768) {
+                            scrollableContent.style.display = 'none';
+                        }
+                    })
+                    .catch(error => {
+                        detailsContent.innerHTML = '<p>Error loading content.</p>';
+                        console.error('Error fetching the Markdown file:', error);
+                    });
+            });
+        });
+
+        backButton.addEventListener('click', () => {
+            // Hide details and show content list on mobile
+            detailsContainer.classList.remove('active');
+            scrollableContent.style.display = 'block';
+            detailsContainer.style.display = 'none';
+            backButton.style.display = 'none';
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.innerWidth <= 768) {
+                const scrollPosition = window.scrollY;
+                const headingPosition = detailsHeading.getBoundingClientRect().top;
+
+                if (scrollPosition > headingPosition) {
+                    backButton.style.position = 'fixed';
+                    backButton.style.top = '10px';
+                } else {
+                    backButton.style.position = 'absolute';
+                    backButton.style.top = 'initial';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
