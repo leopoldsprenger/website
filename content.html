@@ -86,6 +86,16 @@
             box-sizing: border-box; /* Ensure padding is included in width calculation */
         }
 
+        /* Large screen-specific styles */
+        @media (min-width: 769px) {
+            img {
+                width: 50%;
+                display: block; /* Ensure image is a block element */
+                margin-left: auto;
+                margin-right: auto; /* Center-align the image */
+            }
+        }
+
         /* Mobile-specific styles */
         @media (max-width: 768px) {
             .container {
