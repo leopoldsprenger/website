@@ -3,103 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Gray Background with Navigation</title>
+    <title>About Page</title>
     <style>
         body {
-    background-color: #333; /* Dark gray color */
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+            background-color: #333; /* Dark gray color */
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin: 20px;
+        }
+        .left {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            padding-left: 10px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        nav a.selected {
+            color: lightblue;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: white;
+        }
+        .container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .container p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        img {
+            width: 100%;
+            height: auto;
+            max-width: 600px;
+            display: block;
+            margin-top: 20px;
+        }
 
-.top-bar {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin: 20px;
-}
-
-.left {
-    color: white;
-    font-family: Arial, sans-serif;
-    font-size: 18px;
-    padding-left: 10px;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 10px;
-    font-family: Arial, sans-serif;
-    font-size: 18px;
-}
-
-nav a:hover {
-    text-decoration: underline;
-}
-
-nav a.selected {
-    color: lightblue;
-}
-
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-    flex-wrap: wrap; /* Allows items to wrap onto new lines */
-    padding: 20px; /* Adds padding for better spacing */
-}
-
-.text-container {
-    color: white;
-    margin-left: 50px; /* Margin for spacing */
-    text-align: left;
-    flex: 1; /* Allows the text container to grow and shrink */
-}
-
-.text-container h2 {
-    font-size: 36px;
-}
-
-.text-container p {
-    font-size: 16px;
-}
-
-.image-container img {
-    width: 100%; /* Make image responsive */
-    max-width: 300px; /* Cap maximum width */
-    height: auto;
-}
-
-/* Media query for mobile devices */
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column; /* Stack text and image vertically on mobile */
-        align-items: center; /* Center align items */
-    }
-    
-    .text-container {
-        margin-left: 0; /* Remove left margin on mobile */
-        text-align: center; /* Center text on mobile */
-        margin-bottom: 20px; /* Add margin below text */
-    }
-    
-    .image-container {
-        order: 2; /* Ensure the image is below the text container */
-        width: 100%; /* Full width for mobile */
-        display: flex;
-        justify-content: center; /* Center the image horizontally */
-    }
-    
-    .image-container img {
-        max-width: 100%; /* Ensure the image fits within the container on mobile */
-    }
-}
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            img {
+                max-width: 100%;
+                margin: 10px 0;
+            }
+        }
     </style>
+    <script src="router.js"></script>
 </head>
 <body>
     <div class="top-bar">
@@ -112,17 +85,10 @@ nav a.selected {
         </nav>
     </div>
     <div class="container">
-        <div class="image-container">
-            <img src="imgs/Home-page.png" alt="Leopold Sprenger">
-        </div>
-        <div class="text-container">
-            <h2>Leopold Sprenger</h2>
-            <p>Hi, I am a student and hobby developer based in Germany. <br>
-                My coding experiences started at the age of 10 when I designed
-                my first little unity and scratch projects.</p>
-            <br>
-            <p>I quickly moved on to learning python and now at the age of 14 I am currently learning web development.</p>
-        </div>
+        <h1>About Me</h1>
+        <p>Hello! I'm Leopold Sprenger, a student and hobby developer based in Germany. I have a passion for coding and technology, and I'm always looking to learn and create new projects.</p>
+        <p>My journey in programming started with simple projects and has grown into more complex and challenging work. Through this website, I hope to share my experiences and showcase my achievements.</p>
+        <img src="imgs/about-image.png" alt="About Leopold Sprenger">
     </div>
 </body>
 </html>
