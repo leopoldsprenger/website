@@ -82,14 +82,78 @@
         }
         .details-container h2 {
             margin-top: 0;
+            font-size: 36px; /* Consistent with index.html */
         }
-        /* Ensure all images have width 100% and height auto */
-        img {
-            width: 100%;
-            height: auto;
+
+        /* New styles for markdown content */
+        .details-container p {
+            font-size: 20px; /* Consistent with index.html */
+            line-height: 1.6;
+            margin-bottom: 1em;
+        }
+
+        .details-container h1, .details-container h2, .details-container h3, .details-container h4, .details-container h5, .details-container h6 {
+            font-family: Arial, sans-serif; /* Ensure consistency with other text */
+        }
+
+        .details-container h1 {
+            font-size: 36px; /* Consistent with index.html */
+        }
+
+        .details-container h2 {
+            font-size: 36px; /* Consistent with index.html */
+        }
+
+        .details-container h3 {
+            font-size: 26px; /* Consistent with index.html */
+        }
+
+        .details-container h4 {
+            font-size: 26px; /* Consistent with index.html */
+        }
+
+        .details-container h5 {
+            font-size: 20px; /* Consistent with index.html */
+        }
+
+        .details-container h6 {
+            font-size: 20px; /* Consistent with index.html */
+        }
+
+        .details-container ul, .details-container ol {
+            font-size: 20px; /* Consistent with index.html */
+            margin-bottom: 1em;
+        }
+
+        .details-container li {
+            margin-bottom: 0.5em;
+        }
+
+        .details-container pre, .details-container code {
+            font-size: 20px; /* Consistent with index.html */
+            background-color: #444; /* Different background for code blocks */
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        .details-container a {
+            color: lightblue; /* Link color */
+        }
+
+        .details-container img {
             max-width: 100%; /* Ensure images do not exceed container width */
-            object-fit: contain; /* or 'cover' based on your preference */
-            box-sizing: border-box; /* Ensure padding is included in width calculation */
+            height: auto;
+        }
+
+        /* Large screen-specific styles */
+        @media (min-width: 769px) {
+            img {
+                width: 75%;
+                display: block; /* Ensure image is a block element */
+                margin-left: auto;
+                margin-right: auto; /* Center-align the image */
+            }
         }
 
         /* Mobile-specific styles */
