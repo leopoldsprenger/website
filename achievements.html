@@ -45,13 +45,13 @@
             height: calc(100vh - 100px); /* Adjust based on top bar height */
             margin-top: 20px;
         }
-        .scrollable-grid {
+        .scrollable-content {
             width: 30%;
             overflow-y: auto;
             padding: 20px;
             box-sizing: border-box;
         }
-        .grid-item {
+        .content-item {
             margin-bottom: 20px;
             cursor: pointer;
             color: white;
@@ -62,15 +62,10 @@
             text-align: left; /* Ensure text aligns to the left */
             justify-content: flex-start; /* Ensure items align to the left */
         }
-        .grid-item img {
-            width: 50px; /* Adjust size as needed */
-            height: 50px; /* Adjust size as needed */
-            margin-right: 10px;
-        }
-        .grid-item:hover {
+        .content-item:hover {
             text-decoration: underline;
         }
-        .grid-item.selected {
+        .content-item.selected {
             color: lightblue;
         }
         .details-container {
@@ -163,7 +158,7 @@
             .container {
                 flex-direction: column;
             }
-            .scrollable-grid {
+            .scrollable-content {
                 width: 100%;
             }
             .details-container {
@@ -198,12 +193,11 @@
         </nav>
     </div>
     <div class="container">
-        <div class="scrollable-grid" id="scrollableGrid">
-            <div class="grid-item" data-md-file="achievements/personal_website.md" data-heading="Personal website">
-                <img src="imgs/website-icon.png" alt="Achievement 1 Icon">
+        <div class="scrollable-content" id="scrollableContent">
+            <div class="content-item" data-md-file="achievements/personal_website.md" data-heading="Personal website">
                 Personal website
             </div>
-            <!-- Add more grid items as needed -->
+            <!-- Add more content items as needed -->
         </div>
         <div class="details-container" id="detailsContainer">
             <h2 id="detailsHeading">
@@ -215,16 +209,16 @@
     </div>
 
     <script>
-        const scrollableGrid = document.getElementById('scrollableGrid');
+        const scrollableContent = document.getElementById('scrollableContent');
         const detailsContainer = document.getElementById('detailsContainer');
         const detailsHeading = document.getElementById('detailsHeading');
         const detailsContent = document.getElementById('detailsContent');
         const backButton = document.getElementById('backButton');
 
-        document.querySelectorAll('.grid-item').forEach(item => {
+        document.querySelectorAll('.content-item').forEach(item => {
             item.addEventListener('click', () => {
                 // Remove selected class from all items
-                document.querySelectorAll('.grid-item').forEach(i => i.classList.remove('selected'));
+                document.querySelectorAll('.content-item').forEach(i => i.classList.remove('selected'));
                 // Add selected class to the clicked item
                 item.classList.add('selected');
                 // Get the heading and Markdown file for the clicked item
@@ -247,7 +241,7 @@
                         detailsContainer.classList.add('active');
                         detailsContainer.style.display = 'block';
                         if (window.innerWidth <= 768) {
-                            scrollableGrid.style.display = 'none';
+                            scrollableContent.style.display = 'none';
                         }
                     })
                     .catch(error => {
@@ -260,7 +254,7 @@
         backButton.addEventListener('click', () => {
             // Hide details and show content list on mobile
             detailsContainer.classList.remove('active');
-            scrollableGrid.style.display = 'block';
+            scrollableContent.style.display = 'block';
             detailsContainer.style.display = 'none';
             backButton.style.display = 'none';
         });
