@@ -13,7 +13,7 @@ Now that you have your website code, login to your github or create a new accoun
 
 ![Create GitHub Repository](imgs/upload_to_github/Screenshot-1.png)
 
-Where it says ’create repository’, give your repository a name, click on public and click `create repository`.
+Where it says 'create repository', give your repository a name, click on public and click 'create repository'.
 Now when you're redirected to this page, click on `upload an existing file` and follow the steps. Then click commit changes.
 
 ![Upload an existing file](imgs/upload_to_github/Screenshot-2.png)
@@ -22,7 +22,7 @@ Now when you're redirected to this page, click on `upload an existing file` and 
 ### Hosting your website code
 ---
 You should now be on this page, where you can see the code for your repository.
-Now on the top, click on settings, pages and under `branch` change the selection from `None` to `main` and hit save.
+Now on the top, click on settings, pages and under 'branch' change the selection from 'None' to 'main' and hit save.
 
 ![Repository Code](imgs/upload_to_github/Screenshot-3.png)
 
@@ -37,6 +37,6 @@ If the text doesn't display, keep waiting and refreshing.
 
 And there you have it. Your very own website. 
 
-Notice how it has your username and 'github' in the name. If you have a custom domain, you can input it in the same page settings under `custom URL`. 
+Notice how it has your username and 'github' in the name. If you have a custom domain, you can input it in the same page settings under 'custom URL'. 
 But that's going to cost you something.
 Anyway, you now have your own website to display content and show your friends. Enjoy!
