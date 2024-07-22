@@ -37,6 +37,6 @@ If the text doesn't display, keep waiting and refreshing.
 
 And there you have it. Your very own website. 
 
-Notice how it has your username and 'github' in the name. If you have a custom domain, you can input it in the same page settings under 'custom URL'. 
+Notice how it has your username and 'github' in the name. If you have a custom domain, you can input it in the same page settings under `custom URL`. 
 But that's going to cost you something.
 Anyway, you now have your own website to display content and show your friends. Enjoy!
